@@ -28,8 +28,8 @@ export const SimplifiedMarksheetGrid: React.FC<SimplifiedMarksheetGridProps> = (
 }) => {
   const [selectedClassSection, setSelectedClassSection] = useState<string>('Class 10 (Sec A)');
   const [selectedTeacher, setSelectedTeacher] = useState<{ name: string; role: string }>({
-    name: 'Anika Rahman',
-    role: 'Lecturer / Class Teacher',
+    name: 'System Evaluation',
+    role: 'Automated Grader',
   });
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedGradeFilter, setSelectedGradeFilter] = useState('All');
@@ -270,7 +270,7 @@ export const SimplifiedMarksheetGrid: React.FC<SimplifiedMarksheetGridProps> = (
           <span>Click any student card to open the complete deterministic calculation trace.</span>
         </div>
         <div className="text-[11px] font-mono text-slate-400">
-          Bogura GPA Engine • Simplified Layout
+          Automated GPA Engine • Simplified Layout
         </div>
       </div>
     </div>

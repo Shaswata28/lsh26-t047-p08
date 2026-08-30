@@ -79,7 +79,7 @@ export const MarksheetView: React.FC<MarksheetViewProps> = ({ result }) => {
             GPA Engine
           </h1>
           <p className="text-xs font-semibold text-slate-700 tracking-wide uppercase">
-            Bogura Sadar, Bogura • Established 1968 • Board of Intermediate & Secondary Education, Rajshahi
+            Central District • Established 1968 • Board of Intermediate & Secondary Education, Rajshahi
           </p>
           <div className="pt-2">
             <span className="inline-block bg-slate-900 text-white text-xs font-bold uppercase tracking-widest px-4 py-1 rounded-md">
@@ -294,7 +294,7 @@ export const MarksheetView: React.FC<MarksheetViewProps> = ({ result }) => {
             <div className="w-16 h-16 rounded-full border-2 border-dashed border-slate-300 flex items-center justify-center text-[9px] text-slate-400 font-semibold uppercase text-center p-1">
               Institutional Seal
             </div>
-            <div className="text-[10px] text-slate-400 mt-1">Bogura, Bangladesh</div>
+            <div className="text-[10px] text-slate-400 mt-1">Central District, Bangladesh</div>
           </div>
 
           <div className="space-y-1">
@@ -309,7 +309,7 @@ export const MarksheetView: React.FC<MarksheetViewProps> = ({ result }) => {
         {/* Footer Verification Code */}
         <div className="pt-6 border-t border-slate-200 flex items-center justify-between text-[10px] text-slate-400">
           <div>
-            System Generated Document • Bogura GPA Engine v2.0 • Deterministic Evaluation
+            System Generated Document • Automated GPA Engine v2.0 • Deterministic Evaluation
           </div>
           <div className="font-mono">
             VERIFY-ID: BSS-{student.roll}-{student.registrationNo.slice(-4)}

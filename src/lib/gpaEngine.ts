@@ -361,15 +361,16 @@ export function calculateStudentResult(
 
     // Practical & Theory failure diagnostics
     if (!res.isPassed && !res.isAbsent && config.type === 'theory_and_practical') {
-      if (res.theoryPassed && !res.practicalPassed) {
+      if (!res.practicalPassed) {
         hasPracticalFail = true;
         auditFlags.push({
           flagKey: 'PRACTICAL_FAIL',
           label: 'Practical Fail',
           severity: 'danger',
-          description: `${config.name}: Passed theory (${res.theoryMark}/${config.theoryFullMarks}) but failed practical (${res.practicalMark}/${config.practicalFullMarks}, pass is ${config.practicalPassMarks}).`,
+          description: `${config.name}: Failed practical (${res.practicalMark}/${config.practicalFullMarks}, pass is ${config.practicalPassMarks}).`,
         });
-      } else if (!res.theoryPassed && res.practicalPassed) {
+      }
+      if (!res.theoryPassed && res.practicalPassed) {
         hasTheoryFail = true;
         auditFlags.push({
           flagKey: 'THEORY_FAIL',
@@ -422,7 +423,7 @@ export function calculateStudentResult(
           severity: 'success',
           description: `Optional ${config.name} scored GP ${res.gradePoint.toFixed(2)}. Added +${res.optionalAddedGP.toFixed(2)} points to GP sum.`,
         });
-      } else if (!res.isAbsent && res.gradePoint > 0 && res.gradePoint <= 2.0) {
+      } else if (res.gradePoint <= 2.0) {
         auditFlags.push({
           flagKey: 'OPTIONAL_NO_BENEFIT',
           label: 'Optional Subject Below Threshold',

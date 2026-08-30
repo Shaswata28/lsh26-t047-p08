@@ -37,7 +37,7 @@ export default function ImportPage() {
       } else if (modeParam === 'single') {
         setActiveTab('SINGLE');
       } else {
-        const savedTab = localStorage.getItem('bogura_active_import_tab');
+        const savedTab = localStorage.getItem('active_import_tab');
         if (savedTab === 'BATCH' || savedTab === 'SINGLE') {
           setActiveTab(savedTab);
         }
@@ -48,7 +48,7 @@ export default function ImportPage() {
   const handleTabChange = (tab: 'BATCH' | 'SINGLE') => {
     setActiveTab(tab);
     if (typeof window !== 'undefined') {
-      localStorage.setItem('bogura_active_import_tab', tab);
+      localStorage.setItem('active_import_tab', tab);
       const url = new URL(window.location.href);
       url.searchParams.set('mode', tab.toLowerCase());
       window.history.replaceState({}, '', url.toString());
@@ -68,8 +68,8 @@ export default function ImportPage() {
               onClick={() => handleTabChange('SINGLE')}
               className={`flex-1 sm:flex-initial flex items-center justify-center space-x-2 px-4 py-2 rounded-lg transition ${
                 activeTab === 'SINGLE'
-                  ? 'bg-white text-slate-900 shadow-sm font-extrabold'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white text-slate-900 shadow-sm font-bold border border-slate-200/50'
+                  : 'text-slate-700 font-medium hover:text-slate-900 hover:bg-slate-200/50'
               }`}
             >
               <UserPlus className="w-4 h-4 text-emerald-600" />
@@ -80,8 +80,8 @@ export default function ImportPage() {
               onClick={() => handleTabChange('BATCH')}
               className={`flex-1 sm:flex-initial flex items-center justify-center space-x-2 px-4 py-2 rounded-lg transition ${
                 activeTab === 'BATCH'
-                  ? 'bg-white text-slate-900 shadow-sm font-extrabold'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white text-slate-900 shadow-sm font-bold border border-slate-200/50'
+                  : 'text-slate-700 font-medium hover:text-slate-900 hover:bg-slate-200/50'
               }`}
             >
               <UploadCloud className="w-4 h-4 text-teal-600" />

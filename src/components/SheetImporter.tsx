@@ -93,7 +93,7 @@ export const SheetImporter: React.FC<SheetImporterProps> = ({ onImportComplete }
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.setAttribute('href', url);
-    link.setAttribute('download', 'bogura_school_marks_template.csv');
+    link.setAttribute('download', 'school_marks_template.csv');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

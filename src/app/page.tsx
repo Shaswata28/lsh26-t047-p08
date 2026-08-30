@@ -65,7 +65,7 @@ export default function DashboardPage() {
           <div className="relative z-10 space-y-2 max-w-3xl">
             <div className="inline-flex items-center space-x-2 px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-xs font-semibold border border-emerald-500/30">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Bogura District Secondary Education System</span>
+              <span>Automated Secondary Education System</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-100">
               School Result Processing & GPA Engine
@@ -75,40 +75,7 @@ export default function DashboardPage() {
             </p>
           </div>
 
-          {/* Quick links pill row */}
-          <div className="relative z-10 mt-6 pt-4 border-t border-slate-800/80 flex flex-wrap gap-2 text-xs font-semibold">
-            <Link
-              href="/audit"
-              className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl border border-slate-700 transition"
-            >
-              <FileCheck2 className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Office Checking Desk ({results.filter(r => r.auditFlags.length > 0).length} Flagged)</span>
-            </Link>
-
-            <Link
-              href="/import?mode=batch"
-              className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl border border-slate-700 transition"
-            >
-              <UploadCloud className="w-3.5 h-3.5 text-teal-400" />
-              <span>Spreadsheet Batch Import</span>
-            </Link>
-
-            <Link
-              href="/import?mode=single"
-              className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 rounded-xl border border-emerald-700/80 transition font-semibold"
-            >
-              <Users className="w-3.5 h-3.5 text-emerald-400" />
-              <span>✍️ Add Single Student</span>
-            </Link>
-
-            <Link
-              href="/analytics"
-              className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl border border-slate-700 transition"
-            >
-              <BarChart3 className="w-3.5 h-3.5 text-purple-400" />
-              <span>Class Performance Analytics</span>
-            </Link>
-          </div>
+          {/* Quick links pill row removed for redundancy */}
         </div>
 
         {/* If database is empty, show clean prompt to import */}
