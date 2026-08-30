@@ -10,16 +10,14 @@
 | **Problem ID** | `P08` |
 | **Problem Title** | School Result Calculation System |
 | **Repository** | [github.com/Shaswata28/lsh26-t047-p08](https://github.com/Shaswata28/lsh26-t047-p08) |
-| **Live URL** | _Deployed via Vercel — see below_ |
+| **Live URL** | [lsh26-t047-p08.vercel.app](https://lsh26-t047-p08.vercel.app) |
 | **Tech Stack** | Next.js 16.3.3 (Turbopack), React 19, TypeScript, Tailwind CSS v4, Supabase |
 
 ---
 
 ## 🚀 Live URL
 
-> The application is deployable to Vercel. To run locally, follow the setup steps below.
-
-If deployed, open: **`https://lsh26-t047-p08.vercel.app`**
+**https://lsh26-t047-p08.vercel.app**
 
 ---
 
