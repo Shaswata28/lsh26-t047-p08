@@ -1,0 +1,43 @@
+{
+  "name": "School GPA Engine",
+  "short_name": "GPA Engine",
+  "description": "A progressive web app for managing school GPA data, rosters, and anomaly detection.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#6366f1",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["education", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Master Roster",
+      "short_name": "Roster",
+      "description": "View the master student roster",
+      "url": "/",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Anomaly Dashboard",
+      "short_name": "Anomalies",
+      "description": "Review GPA anomalies and alerts",
+      "url": "/anomalies",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
