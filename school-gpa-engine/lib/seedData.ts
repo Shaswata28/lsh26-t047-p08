@@ -108,7 +108,7 @@ const practicalTrap: Student = {
     makeSubject(COMPULSORY_SUBJECTS[1], 55),          // English  — 55
     makeSubject(COMPULSORY_SUBJECTS[2], 50),          // Math     — 50
     makeSubject(COMPULSORY_SUBJECTS[3], 60, 35),      // Physics  — 60 / 35
-    makeSubject(COMPULSORY_SUBJECTS[4], 45, 10),      // Chemistry— 45 / 10 ← practical fail
+    makeSubject(COMPULSORY_SUBJECTS[4], 45,  7),      // Chemistry— 45 /  7 ← practical fail (7 < 8)
     makeSubject(COMPULSORY_SUBJECTS[5], 55, 33),      // Biology  — 55 / 33
     makeSubject(OPTIONAL_SUBJECTS[0],   50),          // Higher Math — 50
   ],
@@ -153,21 +153,25 @@ const ghost: Student = {
 };
 
 /** EC-5 · The Optional Savior
- *  Scraped through compulsory subjects at the lowest passing marks (33–35).
- *  Scored 85 in optional (Higher Math) → big GP boost should lift overall GPA.
+ *  Compulsory subjects sit in the 60-69 band (GP 3.5 each, sum=21.0).
+ *  Without optional bonus: 21.0/6 = 3.5 → letter A-.
+ *  Higher Math scores 85 → GP 5.0, bonus = 3.0.
+ *  With bonus: (21.0+3.0)/6 = 4.0 → letter A.   ← crosses A-→A (Anomaly C)
  */
 const optionalSavior: Student = {
   id: makeId(5),
   name: "Kiran Savior",
   className: "Class 10",
   subjects: [
-    makeSubject(COMPULSORY_SUBJECTS[0], 35),          // Bengali  — 35
-    makeSubject(COMPULSORY_SUBJECTS[1], 33),          // English  — 33
-    makeSubject(COMPULSORY_SUBJECTS[2], 34),          // Math     — 34
-    makeSubject(COMPULSORY_SUBJECTS[3], 33, 33),      // Physics  — 33 / 33
-    makeSubject(COMPULSORY_SUBJECTS[4], 35, 33),      // Chemistry— 35 / 33
-    makeSubject(COMPULSORY_SUBJECTS[5], 33, 33),      // Biology  — 33 / 33
-    makeSubject(OPTIONAL_SUBJECTS[0],   85),          // Higher Math — 85 (GP 4.0)
+    makeSubject(COMPULSORY_SUBJECTS[0], 65),          // Bengali   — 65  (GP 3.5)
+    makeSubject(COMPULSORY_SUBJECTS[1], 62),          // English   — 62  (GP 3.5)
+    makeSubject(COMPULSORY_SUBJECTS[2], 64),          // Math      — 64  (GP 3.5)
+    makeSubject(COMPULSORY_SUBJECTS[3], 52, 12),      // Physics   — 52+12=64 (GP 3.5)
+    makeSubject(COMPULSORY_SUBJECTS[4], 50, 14),      // Chemistry — 50+14=64 (GP 3.5)
+    makeSubject(COMPULSORY_SUBJECTS[5], 52, 12),      // Biology   — 52+12=64 (GP 3.5)
+    makeSubject(OPTIONAL_SUBJECTS[0],   85),          // Higher Math — 85 (GP 5.0, bonus +3.0)
+    // Without bonus: 21.0/6 = 3.5 → A-
+    // With bonus:    (21.0+3.0)/6 = 4.0 → A   ← Anomaly C fires
   ],
 };
 
