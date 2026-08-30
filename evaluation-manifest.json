@@ -1,0 +1,58 @@
+{
+  "team_id": "lsh26-t047",
+  "problem_id": "P08",
+  "problem_title": "School Result Calculation System",
+  "live_url": "https://lsh26-t047-p08.vercel.app",
+  "github_url": "https://github.com/Shaswata28/lsh26-t047-p02.git",
+  "repository_branch": "main",
+  "app_type": "Web App",
+  "tech_stack": {
+    "frontend_framework": "Next.js (App Router, React 19)",
+    "styling": "Tailwind CSS v4",
+    "state_management": "React Context",
+    "database": "Supabase PostgreSQL",
+    "backend_logic": "Deterministic Edge-Case GPA Engine"
+  },
+  "requirements_status": {
+    "requirement_1_data_and_edge_cases": {
+      "status": "COMPLETED",
+      "features": [
+        "Created over 60 test students across two classes via batch CSV import",
+        "Enforces 6 compulsory subjects and exactly 1 optional 4th subject per student",
+        "Subject schema explicitly splits marks into Theory (out of 75) and Practical (out of 25) components",
+        "System handles hard edge cases explicitly: absent in a subject, practical component failure despite high theory, and optional subject underperformance"
+      ]
+    },
+    "requirement_2_gpa_calculation_engine": {
+      "status": "COMPLETED",
+      "features": [
+        "Strict dual-pass rule enforcement: Theory must be >= 25 AND Practical must be >= 8. Failing either yields 0.00 GP",
+        "Absent mapping: AB marks calculate to 0.00 GP",
+        "4th Optional subject bonus math: max(0, GP - 2.00)",
+        "Final GPA mapped from the sum of 6 compulsory subject GPs + optional bonus, divided by 6, capped at 5.00",
+        "Compulsory fail override: Failing any compulsory subject immediately outputs 0.00 GPA and Letter Grade F"
+      ]
+    },
+    "requirement_3_per_student_trace": {
+      "status": "COMPLETED",
+      "features": [
+        "Step-by-step calculation trace UI explicitly built for every student",
+        "Trace logs the exact marks used, the precise GP awarded per subject, and the governing rule",
+        "For students failing with a high uncancelled average, the trace explicitly points out the specific subject causing the Compulsory Failure Override Rule"
+      ]
+    },
+    "requirement_4_office_checking_lists": {
+      "status": "COMPLETED",
+      "features": [
+        "Automated auditing dashboard generating checking lists prior to result publication",
+        "Filters students whose optional subject grade point was <= 2.0 (did not help)",
+        "Filters students who triggered a Practical Fail condition (< 8 in practical part)",
+        "Filters students who received an AB (Absent) mark in any subject"
+      ]
+    }
+  },
+  "setup_instructions": [
+    "npm install",
+    "npm run dev"
+  ]
+}
