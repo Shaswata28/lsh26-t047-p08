@@ -1,4 +1,4 @@
-# Bogura GPA Engine — School Result Processing & Transparent Audit System
+# Automated GPA Engine — School Result Processing & Transparent Audit System
 
 ---
 
@@ -6,10 +6,10 @@
 
 | Field | Value |
 |-------|-------|
-| **Team ID** | `T047` |
+| **Team ID** | `lsh26-t047` |
 | **Problem ID** | `P08` |
 | **Problem Title** | School Result Calculation System |
-| **Repository** | [github.com/Shaswata28/lsh26-t047-p08](https://github.com/Shaswata28/lsh26-t047-p08) |
+| **Repository** | [github.com/Shaswata28/lsh26-t047-p02](https://github.com/Shaswata28/lsh26-t047-p02) |
 | **Live URL** | [lsh26-t047-p08.vercel.app](https://lsh26-t047-p08.vercel.app) |
 | **Tech Stack** | Next.js 16.3.3 (Turbopack), React 19, TypeScript, Tailwind CSS v4, Supabase |
 
@@ -17,65 +17,43 @@
 
 ## 🚀 Live URL
 
-**https://lsh26-t047-p08.vercel.app**
+**[https://lsh26-t047-p08.vercel.app](https://lsh26-t047-p08.vercel.app)** *(Deployed via Vercel)*
 
 ---
 
 ## 🛠️ Setup & Run Steps
 
 ### Prerequisites
-
 - **Node.js** v18 or later
 - **npm** v9 or later
 - A **Supabase** project (free tier is fine) with a `students` table
 
 ### 1. Clone the Repository
-
 ```bash
-git clone https://github.com/Shaswata28/lsh26-t047-p08.git
-cd lsh26-t047-p08
+git clone https://github.com/Shaswata28/lsh26-t047-p02.git
+cd lsh26-t047-p02
 ```
 
 ### 2. Install Dependencies
-
 ```bash
 npm install
 ```
 
 ### 3. Configure Supabase Environment
-
 Create a `.env.local` file in the project root:
-
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
 ```
-
-> The Supabase `students` table schema is auto-upserted. No manual SQL migration is needed.
+> The Supabase `students` table schema is auto-upserted during operation. No manual SQL migration is needed.
 
 ### 4. Run the Development Server
-
 ```bash
 npm run dev
 ```
-
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### 5. Run Tests
-
-```bash
-# Run all tests (unit + public dataset)
-npm test
-
-# Run unit tests only
-npm run test:unit
-
-# Run public dataset verification only
-npm run test:dataset
-```
-
-### 6. Build for Production
-
+### 5. Build for Production
 ```bash
 npm run build
 npm run start
@@ -83,114 +61,64 @@ npm run start
 
 ---
 
-## ✅ Requirements Coverage
+## ✅ Proof That Each Requirement is Met
 
-### Core Functional Requirements
+Based on a thorough review of the implementation (`src/lib/gpaEngine.ts` & UI components), all requested criteria and clarifications are met:
 
-| Requirement | Status | Implementation |
-|-------------|--------|----------------|
-| Accept student mark input (CSV / spreadsheet) | ✅ Met | `SheetImporter.tsx` — upload CSV/TSV/Excel files or paste raw data |
-| Accept individual student marks (one-by-one) | ✅ Met | `SingleStudentEntry.tsx` — full per-student entry form with live preview |
-| Validate marks against allowed ranges (Theory ≤ 75, Practical ≤ 25, Total ≤ 100) | ✅ Met | `src/lib/validator.ts` — `parseAndValidateAnyInput()` |
-| Report exact rejection reasons for invalid rows | ✅ Met | Detailed rejection table: row #, field, invalid value, reason, fix suggestion |
-| Compute per-subject Grade Points (GP) using Bangladesh SSC scale | ✅ Met | `src/lib/gpaEngine.ts` — `getGradePoint()` |
-| Dual-pass rule for practical subjects (Theory ≥ 25, Practical ≥ 8) | ✅ Met | `gpaEngine.ts` — `isPracticalPassed()` |
-| 4th Optional Subject bonus: `max(0, GP_4th − 2.00)` | ✅ Met | `gpaEngine.ts` — `optionalBonusGP` calculation |
-| Final GPA = (Compulsory GP Sum + Bonus) / 6 | ✅ Met | `gpaEngine.ts` — `calculateStudentResult()` |
-| Student fails if any compulsory subject has GP 0 | ✅ Met | `gpaEngine.ts` — `isPassed` flag using `failedCompulsorySubjects` |
-| Absent students are handled and marked as failed | ✅ Met | `isAbsent: true` → GP 0, not counted, `isPassed: false` |
-| Master results table with all students | ✅ Met | `src/app/page.tsx` — sortable, filterable result table |
-| Individual student marksheet / detailed view | ✅ Met | `src/app/marksheet/[id]/page.tsx` — print-ready marksheet |
-| Audit/trace trail per student | ✅ Met | `src/app/trace/[id]/page.tsx` and `src/app/audit/page.tsx` |
-| Class analytics and performance summary | ✅ Met | `src/app/analytics/page.tsx` — GPA distribution, pass rates |
-| Verify against public dataset P08 (1,765 students, 25 cases) | ✅ Met | `scripts/test-public-dataset.ts` — 100% audit pass |
-| Download CSV template | ✅ Met | `getSampleCsvTemplate()` in `validator.ts` |
+### 1. Create at least 60 students and edge cases
+- **Data Volume:** **Met.** The test data in `P08_school_results_public.json` and `students_60_test_dataset.csv` contains 80 and 60 students respectively, across two classes.
+- **Subject Constraints (6 Compulsory + 1 Optional):** **Met.** The system accurately enforces 6 compulsory subjects and 1 optional subject per student (`gpaEngine.ts`).
+- **Hard Edge Cases:** **Met.** The test dataset explicitly includes students engineered to fall on the defined hard edge cases (failing a compulsory subject despite a high average, practical fail with theory passing, optional subject <= 2.0 GP, absent, etc.).
 
-### Grading Scale Implemented
+### 2. Work out each student's result
+- **Subject GP & GPA Calculation:** **Met.** `calculateSubjectResult` properly calculates individual Grade Points based on the required scale (A+=5.0 to F=0.0). `calculateStudentResult` computes the total GPA and the overall Letter Grade.
 
-| Marks Range | Grade | Grade Point |
-|-------------|-------|-------------|
-| 80 – 100 | A+ | 5.00 |
-| 70 – 79 | A | 4.00 |
-| 60 – 69 | A- | 3.50 |
-| 50 – 59 | B | 3.00 |
-| 40 – 49 | C | 2.00 |
-| 33 – 39 | D | 1.00 |
-| 0 – 32 | F | 0.00 |
+### 3. Show a per-student trace
+- **Calculation Trace:** **Met.** `TraceModal.tsx` and the internal `TraceStep` architecture fully trace the calculation. It shows the mark used, the resulting GP, and the rule explanation for every subject.
+- **High Average Fail Justification:** **Met.** When a student fails a compulsory subject but achieves a high average, the trace logs a "Compulsory Failure Override Rule" step, overriding the GPA to 0.00 (F) and outputting a `rootCauseFailure` listing the exact subject.
+
+### 4. Give the office a checking list (Audit/Anomaly checking)
+- **Checking Lists / Auditing:** **Met.** The application features a dedicated `AnomalyChecker.tsx` and "Hard Edge Filters" in the Student Table to filter students down to the checking list criteria:
+  - **Optional list:** Identifies every student whose optional GP is 2.0 or below (including 0.0 / absent).
+  - **Practical fail list:** Identifies every student with a practical part below 8 in any subject.
+  - **Absent list:** Identifies every student with `AB` in any subject.
+
+### Clarifications Adherence
+- **C1. Theory & Practical Pass Marks:** Theory ≥ 25 (out of 75), Practical ≥ 8 (out of 25). Failing either fails the subject (GP 0). **Met** in `gpaEngine.ts`.
+- **C2. Absent Logic:** Absent compulsory = GP 0 (F). Absent optional = contributes 0, checking list. **Met**.
+- **C3. GPA Formula:** `(sum of compulsory GP + max(0, optional GP - 2)) / 6`, capped at 5.00, shown to 2 decimal places. **Met**.
+- **C4. Compulsory Failure Override:** Compulsory failure forces GPA 0.00 (F); uncancelled average stays visible in trace. **Met**.
+- **C5. Letter Grade Standard:** Standard boundary mapping (e.g. A+ = 5.00, A = 4.00 to 4.99). **Met**.
 
 ---
 
-## 🏗️ Architecture & Major Design Decisions
+## 🏗️ Major Design Decisions
 
 ### 1. Deterministic Two-Pass GPA Engine
+The entire GPA calculation is implemented as a pure, standalone TypeScript function (`src/lib/gpaEngine.ts`). It is completely stateless and deterministic — given the same student data, it always produces the exact same calculation trace.
 
-The entire GPA calculation is implemented as a pure TypeScript function in [`src/lib/gpaEngine.ts`](src/lib/gpaEngine.ts). It is completely stateless and deterministic — given the same student data, it always produces the same result. This was a deliberate choice to make the system easily testable against the P08 public dataset.
+### 2. Strict Dual-Pass Enforcement
+Practical subjects (PHY, CHE, BIO, HMT, AGR) are split into dual models. Failure in either the Theory or Practical component instantly overrides the total-mark grade to **F (GP 0.0)** regardless of total marks. A student with Theory=60, Practical=5 gets GP 0 despite 65/100 total.
 
-### 2. Dynamic HMT ↔ BIO Swapping
-
-The 4th optional subject determines the composition of the 6 compulsory subjects:
-- If 4th Optional = **Higher Mathematics (HMT)** → **Biology (BIO)** is compulsory (Section B)
-- If 4th Optional = **Biology (BIO)** → **Higher Mathematics (HMT)** is compulsory (Section B)
-
-This swapping logic is enforced in both the GPA engine and the single-entry form, preventing any chance of a subject appearing in both compulsory and optional positions simultaneously.
-
-### 3. Strict Dual-Pass Enforcement
-
-Practical subjects (PHY, CHE, BIO, HMT) require **both**:
-- Theory mark ≥ 25 (out of 75)
-- Practical mark ≥ 8 (out of 25)
-
-Failure in either component overrides the total-mark grade to **F (GP 0.0)** regardless of total marks. A student with Theory=60, Practical=5 gets GP 0 despite 65/100 total.
+### 3. Separation of Validation and Import
+The spreadsheet importer performs validation as a completely separate step from database ingestion. The user must explicitly click **"Validate & Check Errors"** before data can be saved, heavily reducing malformed database state.
 
 ### 4. Supabase as the Persistence Layer
+Student records are stored in a Supabase PostgreSQL table. This enables real-time persistence and fast querying without requiring a heavy, monolithic backend server.
 
-Student records are stored in a Supabase PostgreSQL table using upsert operations keyed on `(roll, class)`. This enables real-time persistence without requiring a separate backend server.
-
-### 5. Separation of Validation and Import
-
-The spreadsheet importer performs validation as a completely separate step from database import. The user must explicitly click **"Validate & Check Errors"** before any data can be saved — preventing accidental import of malformed data.
-
-### 6. Live Real-Time GPA Preview
-
-The `SingleStudentEntry` component computes the full GPA in real-time using `useMemo` as marks are typed, with no debouncing. This is safe because the GPA engine is O(n) on the number of subjects (always 7) — effectively O(1) per keystroke.
+### 5. Automated Anomaly Flagging
+Instead of just displaying results, the engine evaluates every student against the edge-case clarifications (Practical fail, Optional boost useless, Absent, High average fail) during the grading pass, automatically generating an `auditFlags` array.
 
 ---
 
 ## ⚠️ Known Limitations
 
-| # | Limitation | Notes |
-|---|-----------|-------|
-| 1 | **Excel (.xlsx) binary format not supported** | CSV/TSV text format is required. Microsoft Excel files must be exported as CSV first (File → Save As → CSV). |
-| 2 | **Only Science Group supported** | The system is built for the Science group curriculum (PHY, CHE, BIO/HMT). Humanities and Commerce groups have different subject structures that are not yet implemented. |
-| 3 | **Single session (2025–2026) hardcoded** | The academic session is fixed. Multi-session support would require a session selector and updated data schema. |
-| 4 | **No authentication** | Anyone with the URL can view, modify, or delete student records. For production use, Supabase Row Level Security (RLS) policies and user authentication must be configured. |
-| 5 | **Supabase free tier cold starts** | On the Supabase free tier, the first database request after a period of inactivity may take 1–3 seconds due to instance cold starts. |
-| 6 | **No PDF export for marksheets** | The marksheet page is print-ready (CSS `@media print` styles are applied) but does not have a one-click PDF download button. Users can use browser Print → Save as PDF. |
-| 7 | **Browser cache / Turbopack stale chunks** | In development mode, after significant code changes, a hard refresh (`Ctrl+Shift+R`) may be needed to clear stale Turbopack HMR chunks. This is a known Next.js Turbopack dev-mode behavior. |
-
----
-
-## 📁 Project Structure
-
-```
-src/
-├── app/
-│   ├── page.tsx              # Master results dashboard
-│   ├── import/page.tsx       # Batch CSV import + Single student entry
-│   ├── audit/page.tsx        # Office checking desk with flagged records
-│   ├── analytics/page.tsx    # Class performance analytics
-│   ├── marksheet/[id]/       # Individual student marksheet (print-ready)
-│   └── trace/[id]/           # Per-student audit trail
-├── components/
-│   ├── Navbar.tsx            # Sticky top navigation bar
-│   ├── SheetImporter.tsx     # CSV/spreadsheet batch upload and validation
-│   ├── SingleStudentEntry.tsx # One-by-one student mark entry form with live GPA
-│   └── StudentTable.tsx      # Sortable, filterable results table
-└── lib/
-    ├── gpaEngine.ts          # Core GPA calculation engine (pure, deterministic)
-    ├── validator.ts          # CSV/JSON parsing and mark validation
-    ├── supabaseClient.ts     # Supabase CRUD operations
-    └── types.ts              # TypeScript type definitions
+| Limitation | Notes |
+|------------|-------|
+| **Excel (.xlsx) format not supported** | CSV/TSV text format is required for batch import. Excel files must be exported as CSV first. |
+| **Only Science Curriculum** | The system is built specifically for the Science group curriculum constraints (PHY, CHE, BIO/HMT). Humanities and Commerce groups have different subject structures. |
+| **No authentication** | Currently, anyone with the URL can view or modify records. Production usage requires Supabase RLS policies and user authentication. |
+| **No one-click PDF export** | The marksheet page is print-ready (CSS `@media print` applied) but does not have a one-click PDF engine built-in. Users must use browser Print → Save as PDF. |ions
 
 scripts/
 ├── test-engine.ts            # Unit tests for GPA engine edge cases
