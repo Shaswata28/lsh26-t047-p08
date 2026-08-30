@@ -21,6 +21,18 @@
 
 ---
 
+## 👥 Team Contributions
+
+**Shaswata Das**: Project initialization, UI/UX bug resolution, GPA calculation fixes, and management of hackathon submission manifests and deployment routing.
+
+**Warlord112**: Core engine development featuring single/batch CSV data import, live GPA verification, 4th subject swap algorithms, and comprehensive project documentation.
+
+**ProttoyIsOnTop**: Foundational codebase engineering and initial project environment configuration.
+
+**Tanjim**: UI/UX design and refinement, conceptualizing the overarching visual layout, structural aesthetics, and webpage interfaces.
+
+---
+
 ## 🛠️ Setup & Run Steps
 
 ### Prerequisites
@@ -118,8 +130,13 @@ Instead of just displaying results, the engine evaluates every student against t
 | **Excel (.xlsx) format not supported** | CSV/TSV text format is required for batch import. Excel files must be exported as CSV first. |
 | **Only Science Curriculum** | The system is built specifically for the Science group curriculum constraints (PHY, CHE, BIO/HMT). Humanities and Commerce groups have different subject structures. |
 | **No authentication** | Currently, anyone with the URL can view or modify records. Production usage requires Supabase RLS policies and user authentication. |
-| **No one-click PDF export** | The marksheet page is print-ready (CSS `@media print` applied) but does not have a one-click PDF engine built-in. Users must use browser Print → Save as PDF. |ions
+| **No one-click PDF export** | The marksheet page is print-ready (CSS `@media print` applied) but does not have a one-click PDF engine built-in. Users must use browser Print → Save as PDF. |
 
+---
+
+## 📁 Repository Structure
+
+```text
 scripts/
 ├── test-engine.ts            # Unit tests for GPA engine edge cases
 └── test-public-dataset.ts    # Verification against P08 public dataset (1,765 students)
@@ -135,7 +152,7 @@ public/
 
 Running `npm test` verifies the engine against all 25 public dataset cases:
 
-```
+```text
 ================================================================
   BOGURA GPA ENGINE - PUBLIC DATASET TEST SUITE (P08)
 ================================================================

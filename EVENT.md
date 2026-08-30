@@ -1,3 +1,6 @@
+LSH26-8490-C900
+Event start code
+
 # EVENT.md
 
 ## dY?+ Hackathon Event Declaration
