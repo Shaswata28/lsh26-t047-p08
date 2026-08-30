@@ -268,7 +268,7 @@ export const StudentTable: React.FC<StudentTableProps> = ({
                 <th className="py-3 px-2 text-center">Physics (T+P)</th>
                 <th className="py-3 px-2 text-center">Chem (T+P)</th>
                 <th className="py-3 px-2 text-center">Bio (T+P)</th>
-                <th className="py-3 px-2 text-center">H.Math (4th)</th>
+                <th className="py-3 px-2 text-center bg-purple-900/30 text-purple-200">4th Optional (HMT/AGR/REL)</th>
                 <th 
                   onClick={() => handleSort('marks')}
                   className="py-3 px-3 text-center cursor-pointer hover:text-emerald-400 transition"
@@ -311,7 +311,7 @@ export const StudentTable: React.FC<StudentTableProps> = ({
                   const phy = getSub('PHY');
                   const che = getSub('CHE');
                   const bio = getSub('BIO');
-                  const hma = getSub('HMA');
+                  const opt = subjectResults.find(s => s.isOptional) || getSub('HMT') || getSub('AGR') || getSub('REL') || getSub('HMA');
 
                   const renderSubjectPill = (sub?: (typeof subjectResults)[0], isOpt = false) => {
                     if (!sub) return <span>-</span>;
@@ -326,11 +326,18 @@ export const StudentTable: React.FC<StudentTableProps> = ({
                     const isFail = !sub.isPassed;
                     return (
                       <div className="inline-flex flex-col items-center">
-                        <span className={`font-mono font-semibold text-[11px] ${
-                          isFail ? 'text-rose-600 font-bold' : 'text-slate-800'
-                        }`}>
-                          {sub.totalMark}
-                        </span>
+                        <div className="flex items-center space-x-0.5">
+                          <span className={`font-mono font-semibold text-[11px] ${
+                            isFail ? 'text-rose-600 font-bold' : 'text-slate-800'
+                          }`}>
+                            {sub.totalMark}
+                          </span>
+                          {isOpt && (
+                            <span className="text-[9px] font-mono text-purple-700 font-semibold">
+                              ({sub.subjectCode})
+                            </span>
+                          )}
+                        </div>
                         <span className={`text-[9px] px-1 rounded font-mono ${
                           isFail ? 'bg-rose-100 text-rose-700 font-bold' : isOpt && sub.optionalAddedGP > 0 ? 'bg-purple-100 text-purple-700 font-bold' : 'text-slate-500'
                         }`}>
@@ -386,7 +393,7 @@ export const StudentTable: React.FC<StudentTableProps> = ({
                       <td className="py-3 px-2 text-center">{renderSubjectPill(phy)}</td>
                       <td className="py-3 px-2 text-center">{renderSubjectPill(che)}</td>
                       <td className="py-3 px-2 text-center">{renderSubjectPill(bio)}</td>
-                      <td className="py-3 px-2 text-center bg-purple-50/40">{renderSubjectPill(hma, true)}</td>
+                      <td className="py-3 px-2 text-center bg-purple-50/40">{renderSubjectPill(opt, true)}</td>
 
                       {/* Total Marks */}
                       <td className="py-3 px-3 text-center font-mono font-bold text-slate-700">

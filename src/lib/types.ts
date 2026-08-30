@@ -54,6 +54,7 @@ export interface Student {
   section: 'A' | 'B';
   group: 'Science' | 'Humanities' | 'Business Studies';
   session: string;
+  optional?: string; // Optional subject code: 'HMT' | 'AGR' | 'REL' | 'HMA'
   edgeCaseTag?: string;
   edgeCaseDescription?: string;
   marks: Record<string, SubjectMarkInput>;

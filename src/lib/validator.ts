@@ -283,6 +283,125 @@ export function parseAndValidateSpreadsheetText(
 }
 
 /**
+ * Converts a raw student object from P08_school_results_public.json case into a typed Student
+ */
+export function convertPublicStudentToStudent(
+  rawStudent: any,
+  index: number,
+  caseId?: string
+): Student {
+  const roll = rawStudent.id && /^S(\d+)$/i.test(rawStudent.id)
+    ? parseInt(rawStudent.id.replace(/^S/i, ''), 10)
+    : (rawStudent.roll || index + 1);
+
+  const studentMarks: Record<string, SubjectMarkInput> = {};
+
+  if (rawStudent.marks && typeof rawStudent.marks === 'object') {
+    for (const [code, val] of Object.entries(rawStudent.marks)) {
+      if (val === 'AB' || val === 'ABS' || val === 'ABSENT') {
+        studentMarks[code] = { theoryMark: 'ABS', practicalMark: 'ABS', isAbsent: true };
+      } else if (typeof val === 'number') {
+        studentMarks[code] = { theoryMark: val, isAbsent: false };
+      } else if (typeof val === 'object' && val !== null) {
+        const obj = val as any;
+        const th = typeof obj.theory === 'number' ? obj.theory : 0;
+        const pr = typeof obj.practical === 'number' ? obj.practical : 0;
+        studentMarks[code] = {
+          theoryMark: th,
+          practicalMark: pr,
+          isAbsent: false,
+        };
+      }
+    }
+  }
+
+  return {
+    id: rawStudent.id || `S${String(roll).padStart(3, '0')}`,
+    roll,
+    registrationNo: `REG2026-${String(roll).padStart(3, '0')}`,
+    name: rawStudent.name || `Student ${roll}`,
+    gender: (roll % 2 === 0 ? 'Female' : 'Male'),
+    class: (rawStudent.class === 'Class 9' ? 'Class 9' : 'Class 10'),
+    section: (roll % 2 === 0 ? 'B' : 'A'),
+    group: 'Science',
+    session: '2025-2026',
+    optional: rawStudent.optional || undefined,
+    marks: studentMarks,
+  };
+}
+
+/**
+ * Converts a case object from P08_school_results_public.json to an array of Students
+ */
+export function convertPublicCaseToStudents(caseData: any): Student[] {
+  if (!caseData || !Array.isArray(caseData.students)) return [];
+  return caseData.students.map((s: any, idx: number) =>
+    convertPublicStudentToStudent(s, idx, caseData.case_id)
+  );
+}
+
+/**
+ * Parses and validates either CSV text or JSON cases format
+ */
+export function parseAndValidateAnyInput(
+  rawInput: string,
+  targetClass: 'Class 9' | 'Class 10' = 'Class 10'
+): ImportValidationResult {
+  const trimmed = rawInput.trim();
+  if (!trimmed) {
+    return { totalRows: 0, validRows: [], rejectedRows: [] };
+  }
+
+  // Check if input is JSON
+  if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+    try {
+      const parsed = JSON.parse(trimmed);
+      let students: any[] = [];
+
+      if (parsed.cases && Array.isArray(parsed.cases)) {
+        // Full P08 JSON file: extract all students from all cases or first case
+        for (const c of parsed.cases) {
+          if (Array.isArray(c.students)) {
+            students.push(...c.students);
+          }
+        }
+      } else if (parsed.students && Array.isArray(parsed.students)) {
+        // Single case format: { case_id: 'PUB-01', students: [...] }
+        students = parsed.students;
+      } else if (Array.isArray(parsed)) {
+        // Array of students: [...]
+        students = parsed;
+      } else if (parsed.id && parsed.marks) {
+        // Single student object
+        students = [parsed];
+      }
+
+      const validRows: Student[] = students.map((s, idx) => convertPublicStudentToStudent(s, idx));
+      return {
+        totalRows: students.length,
+        validRows,
+        rejectedRows: [],
+      };
+    } catch (e: any) {
+      return {
+        totalRows: 1,
+        validRows: [],
+        rejectedRows: [{
+          rowNumber: 1,
+          field: 'JSON Payload',
+          invalidValue: 'Malformed JSON',
+          reason: `Failed to parse JSON: ${e.message}`,
+          suggestion: 'Ensure valid JSON format matching P08 specification or CSV/TSV format.',
+        }],
+      };
+    }
+  }
+
+  // Fallback to CSV / TSV parser
+  return parseAndValidateSpreadsheetText(trimmed, targetClass);
+}
+
+/**
  * Returns sample CSV template text for users to copy/paste or download.
  */
 export function getSampleCsvTemplate(): string {

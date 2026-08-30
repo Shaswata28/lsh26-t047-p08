@@ -10,7 +10,7 @@ import {
   ClassAnalytics,
 } from './types';
 
-// Standard 6 Compulsory + 1 Optional Subject Configuration for Bogura Secondary School
+// Standard Subject Configurations for Bogura Secondary School (Compulsory + Optionals)
 export const DEFAULT_SUBJECT_CONFIGS: Record<string, SubjectConfig> = {
   BAN: {
     code: 'BAN',
@@ -78,15 +78,48 @@ export const DEFAULT_SUBJECT_CONFIGS: Record<string, SubjectConfig> = {
     practicalPassMarks: 8,
     isOptional: false,
   },
-  HMA: {
-    code: 'HMA',
-    name: 'Higher Mathematics (4th Optional)',
+  HMT: {
+    code: 'HMT',
+    name: 'Higher Mathematics',
     type: 'theory_and_practical',
     fullMarks: 100,
     theoryFullMarks: 75,
     practicalFullMarks: 25,
     theoryPassMarks: 25,
     practicalPassMarks: 8,
+    isOptional: true,
+  },
+  HMA: {
+    code: 'HMA',
+    name: 'Higher Mathematics',
+    type: 'theory_and_practical',
+    fullMarks: 100,
+    theoryFullMarks: 75,
+    practicalFullMarks: 25,
+    theoryPassMarks: 25,
+    practicalPassMarks: 8,
+    isOptional: true,
+  },
+  AGR: {
+    code: 'AGR',
+    name: 'Agriculture',
+    type: 'theory_and_practical',
+    fullMarks: 100,
+    theoryFullMarks: 75,
+    practicalFullMarks: 25,
+    theoryPassMarks: 25,
+    practicalPassMarks: 8,
+    isOptional: true,
+  },
+  REL: {
+    code: 'REL',
+    name: 'Religion',
+    type: 'theory_only',
+    fullMarks: 100,
+    theoryFullMarks: 100,
+    practicalFullMarks: 0,
+    theoryPassMarks: 33,
+    practicalPassMarks: 0,
     isOptional: true,
   },
 };
@@ -262,8 +295,57 @@ export function calculateStudentResult(
   let hasTheoryFail = false;
   let hasOptionalBoost = false;
 
-  // Evaluate each subject
-  for (const [code, config] of Object.entries(subjectConfigs)) {
+  // Determine student's active subjects: 6 Compulsory + 1 Optional (4th subject)
+  let optionalCode = student.optional;
+  if (!optionalCode) {
+    const markKeys = Object.keys(student.marks || {});
+    optionalCode = markKeys.find(k => !['BAN', 'ENG', 'MAT', 'PHY', 'CHE', 'BIO'].includes(k)) || 'HMT';
+  }
+
+  // If optional is BIO, then HMT (or HMA) is the 6th compulsory subject.
+  // Otherwise, BIO is the 6th compulsory subject.
+  let compulsoryCodes: string[];
+  if (optionalCode === 'BIO') {
+    const hasHma = student.marks && ('HMA' in student.marks);
+    compulsoryCodes = ['BAN', 'ENG', 'MAT', 'PHY', 'CHE', hasHma ? 'HMA' : 'HMT'];
+  } else {
+    compulsoryCodes = ['BAN', 'ENG', 'MAT', 'PHY', 'CHE', 'BIO'];
+  }
+
+  // Ensure compulsoryCodes never contains optionalCode
+  compulsoryCodes = compulsoryCodes.filter(c => c !== optionalCode);
+  if (compulsoryCodes.length < 6) {
+    const fallback = optionalCode === 'BIO' ? 'HMT' : 'BIO';
+    if (!compulsoryCodes.includes(fallback)) {
+      compulsoryCodes.push(fallback);
+    }
+  }
+
+  // Active subject codes to evaluate for this student
+  const activeSubjectCodes: { code: string; isOptional: boolean }[] = [
+    ...compulsoryCodes.slice(0, 6).map(code => ({ code, isOptional: false })),
+    { code: optionalCode, isOptional: true },
+  ];
+
+  // Evaluate each active subject
+  for (const { code, isOptional } of activeSubjectCodes) {
+    const baseConfig = subjectConfigs[code] || DEFAULT_SUBJECT_CONFIGS[code] || {
+      code,
+      name: code,
+      type: 'theory_only' as const,
+      fullMarks: 100,
+      theoryFullMarks: 100,
+      practicalFullMarks: 0,
+      theoryPassMarks: 33,
+      practicalPassMarks: 0,
+      isOptional,
+    };
+
+    const config: SubjectConfig = {
+      ...baseConfig,
+      isOptional,
+    };
+
     const markInput: SubjectMarkInput = student.marks[code] || { theoryMark: 0, practicalMark: 0 };
     const res = calculateSubjectResult(config, markInput);
     subjectResults.push(res);

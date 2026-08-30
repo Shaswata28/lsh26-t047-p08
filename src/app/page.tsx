@@ -86,11 +86,19 @@ export default function DashboardPage() {
             </Link>
 
             <Link
-              href="/import"
+              href="/import?mode=batch"
               className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl border border-slate-700 transition"
             >
               <UploadCloud className="w-3.5 h-3.5 text-teal-400" />
-              <span>Spreadsheet Import & Reject Desk</span>
+              <span>Spreadsheet Batch Import</span>
+            </Link>
+
+            <Link
+              href="/import?mode=single"
+              className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 rounded-xl border border-emerald-700/80 transition font-semibold"
+            >
+              <Users className="w-3.5 h-3.5 text-emerald-400" />
+              <span>✍️ Add Single Student</span>
             </Link>
 
             <Link

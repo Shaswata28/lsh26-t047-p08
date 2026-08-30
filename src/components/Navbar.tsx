@@ -22,8 +22,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navLinks = [
     { href: '/', label: 'Master Results', icon: LayoutDashboard, badge: studentCount },
+    { href: '/import', label: 'Student Data & Import Desk', icon: UploadCloud },
     { href: '/audit', label: 'Office Checking Desk', icon: FileCheck2 },
-    { href: '/import', label: 'Spreadsheet Import', icon: UploadCloud },
     { href: '/analytics', label: 'Class Analytics', icon: BarChart3 },
   ];
 
