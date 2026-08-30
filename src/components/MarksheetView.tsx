@@ -76,7 +76,7 @@ export const MarksheetView: React.FC<MarksheetViewProps> = ({ result }) => {
             </div>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-slate-950 font-serif">
-            Bogura Secondary School
+            GPA Engine
           </h1>
           <p className="text-xs font-semibold text-slate-700 tracking-wide uppercase">
             Bogura Sadar, Bogura • Established 1968 • Board of Intermediate & Secondary Education, Rajshahi
@@ -287,7 +287,7 @@ export const MarksheetView: React.FC<MarksheetViewProps> = ({ result }) => {
               M. A. Hashem
             </div>
             <div className="font-bold text-slate-800">Class Teacher</div>
-            <div className="text-[10px] text-slate-400">Bogura Secondary School</div>
+            <div className="text-[10px] text-slate-400">GPA Engine</div>
           </div>
 
           <div className="flex flex-col items-center justify-end">

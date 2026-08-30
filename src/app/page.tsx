@@ -71,7 +71,7 @@ export default function DashboardPage() {
               School Result Processing & GPA Engine
             </h1>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              Deterministic, transparent grading for Bogura Secondary School. Enforces strict theory & practical dual-passing rules, exact 4th subject bonus arithmetic, and complete per-student trace audits.
+              Deterministic, transparent grading for GPA Engine. Enforces strict theory & practical dual-passing rules, exact 4th subject bonus arithmetic, and complete per-student trace audits.
             </p>
           </div>
 

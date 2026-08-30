@@ -108,7 +108,7 @@ export const SimplifiedMarksheetGrid: React.FC<SimplifiedMarksheetGridProps> = (
               {selectedTeacher.name}
             </h3>
             <p className="text-xs text-slate-500 font-medium">
-              {selectedTeacher.role} • Bogura Secondary School
+              {selectedTeacher.role} • GPA Engine
             </p>
           </div>
         </div>

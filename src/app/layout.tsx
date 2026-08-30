@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Bogura Secondary School - Result Processing & GPA Engine',
-  description: 'Deterministic and transparent GPA calculation & result audit system for Bogura Secondary School. Strictly implements dual-pass practical and optional 4th subject rules.',
+  title: 'GPA Engine - Result Processing & Verification System',
+  description: 'Deterministic and transparent GPA calculation & result audit system for GPA Engine. Strictly implements dual-pass practical and optional 4th subject rules.',
 };
 
 export default function RootLayout({

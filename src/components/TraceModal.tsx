@@ -72,7 +72,7 @@ export const TraceModal: React.FC<TraceModalProps> = ({ result, onClose }) => {
                 </span>
               </h2>
               <p className="text-xs text-slate-300">
-                Bogura Secondary School • Rule-by-rule arithmetic audit
+                GPA Engine • Rule-by-rule arithmetic audit
               </p>
             </div>
           </div>
@@ -410,7 +410,7 @@ export const TraceModal: React.FC<TraceModalProps> = ({ result, onClose }) => {
         {/* Modal Footer */}
         <div className="bg-slate-50 px-6 py-4 border-t border-slate-200 flex items-center justify-between">
           <span className="text-xs text-slate-500">
-            Bogura Secondary School Result Processing Engine • Verification Standard
+            GPA Engine • Verification Standard
           </span>
           <button
             onClick={onClose}

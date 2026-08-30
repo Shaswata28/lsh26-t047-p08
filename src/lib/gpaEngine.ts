@@ -10,7 +10,7 @@ import {
   ClassAnalytics,
 } from './types';
 
-// Standard Subject Configurations for Bogura Secondary School (Compulsory + Optionals)
+// Standard Subject Configurations for GPA Engine (Compulsory + Optionals)
 export const DEFAULT_SUBJECT_CONFIGS: Record<string, SubjectConfig> = {
   BAN: {
     code: 'BAN',

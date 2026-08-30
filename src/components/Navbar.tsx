@@ -40,10 +40,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div>
                 <div className="flex items-center space-x-2">
                   <span className="font-bold text-base tracking-tight text-slate-100 group-hover:text-emerald-400 transition-colors">
-                    Bogura Secondary School
+                    GPA Engine
                   </span>
                   <span className="bg-emerald-500/20 text-emerald-300 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-emerald-500/30">
-                    GPA Engine
+                    Pro
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-400">

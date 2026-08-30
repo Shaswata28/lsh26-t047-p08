@@ -56,7 +56,7 @@ export const AnalyticsCharts: React.FC<AnalyticsChartsProps> = ({ results }) => 
             <span>Academic Performance & Grade Distribution Analytics</span>
           </h2>
           <p className="text-xs text-slate-500">
-            Bogura Secondary School • Comprehensive statistical report
+            GPA Engine • Comprehensive statistical report
           </p>
         </div>
 

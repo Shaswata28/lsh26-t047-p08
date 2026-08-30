@@ -2,17 +2,17 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { 
-  Search, 
-  Filter, 
-  Sparkles, 
-  Eye, 
-  Printer, 
-  CheckCircle2, 
-  XCircle, 
-  AlertCircle, 
-  ChevronDown, 
-  ChevronUp, 
+import {
+  Search,
+  Filter,
+  Sparkles,
+  Eye,
+  Printer,
+  CheckCircle2,
+  XCircle,
+  AlertCircle,
+  ChevronDown,
+  ChevronUp,
   ArrowUpDown,
   UserX,
   FileSpreadsheet
@@ -41,7 +41,7 @@ export const StudentTable: React.FC<StudentTableProps> = ({
   const filteredResults = useMemo(() => {
     return results.filter((res) => {
       const { student } = res;
-      
+
       // Class Filter
       if (selectedClass !== 'All' && student.class !== selectedClass) return false;
 
@@ -117,7 +117,7 @@ export const StudentTable: React.FC<StudentTableProps> = ({
       {/* Search & Main Filter Controls */}
       <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 space-y-3">
         <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
-          
+
           {/* Search Box */}
           <div className="relative flex-1">
             <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -129,7 +129,7 @@ export const StudentTable: React.FC<StudentTableProps> = ({
               className="w-full pl-10 pr-4 py-2 bg-slate-50 hover:bg-slate-100/80 focus:bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
             />
             {searchQuery && (
-              <button 
+              <button
                 onClick={() => setSearchQuery('')}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-600 font-semibold"
               >
@@ -141,18 +141,17 @@ export const StudentTable: React.FC<StudentTableProps> = ({
           {/* Class Switcher Tabs */}
           <div className="flex bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600">
             {(['All', 'Class 10', 'Class 9'] as const).map((cls) => {
-              const count = cls === 'All' 
-                ? results.length 
+              const count = cls === 'All'
+                ? results.length
                 : results.filter(r => r.student.class === cls).length;
               return (
                 <button
                   key={cls}
                   onClick={() => setSelectedClass(cls)}
-                  className={`px-3 py-1.5 rounded-lg transition-all ${
-                    selectedClass === cls
+                  className={`px-3 py-1.5 rounded-lg transition-all ${selectedClass === cls
                       ? 'bg-white text-slate-900 shadow-sm font-bold'
                       : 'hover:text-slate-900'
-                  }`}
+                    }`}
                 >
                   {cls === 'All' ? 'All Classes' : cls} ({count})
                 </button>
@@ -213,11 +212,10 @@ export const StudentTable: React.FC<StudentTableProps> = ({
                 <button
                   key={filter.key}
                   onClick={() => setSelectedEdgeFilter(filter.key)}
-                  className={`px-2.5 py-1 rounded-full text-[11px] font-medium shrink-0 transition-all border ${
-                    isSelected
+                  className={`px-2.5 py-1 rounded-full text-[11px] font-medium shrink-0 transition-all border ${isSelected
                       ? 'bg-amber-600 text-white border-amber-600 shadow-sm'
                       : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border-slate-200'
-                  }`}
+                    }`}
                 >
                   {filter.label}
                 </button>
@@ -244,7 +242,7 @@ export const StudentTable: React.FC<StudentTableProps> = ({
           <table className="w-full text-left text-xs">
             <thead className="bg-slate-900 text-slate-200 font-semibold uppercase tracking-wider text-[11px]">
               <tr>
-                <th 
+                <th
                   onClick={() => handleSort('roll')}
                   className="py-3 px-3 cursor-pointer hover:text-emerald-400 transition"
                 >
@@ -253,7 +251,7 @@ export const StudentTable: React.FC<StudentTableProps> = ({
                     <ArrowUpDown className="w-3 h-3 opacity-60" />
                   </div>
                 </th>
-                <th 
+                <th
                   onClick={() => handleSort('name')}
                   className="py-3 px-4 cursor-pointer hover:text-emerald-400 transition"
                 >
@@ -269,7 +267,7 @@ export const StudentTable: React.FC<StudentTableProps> = ({
                 <th className="py-3 px-2 text-center">Chem (T+P)</th>
                 <th className="py-3 px-2 text-center">Bio (T+P)</th>
                 <th className="py-3 px-2 text-center bg-purple-900/30 text-purple-200">4th Optional (HMT/AGR/REL)</th>
-                <th 
+                <th
                   onClick={() => handleSort('marks')}
                   className="py-3 px-3 text-center cursor-pointer hover:text-emerald-400 transition"
                 >
@@ -278,7 +276,7 @@ export const StudentTable: React.FC<StudentTableProps> = ({
                     <ArrowUpDown className="w-3 h-3 opacity-60" />
                   </div>
                 </th>
-                <th 
+                <th
                   onClick={() => handleSort('gpa')}
                   className="py-3 px-3 text-center cursor-pointer hover:text-emerald-400 transition"
                 >
@@ -304,7 +302,7 @@ export const StudentTable: React.FC<StudentTableProps> = ({
                 filteredResults.map((res) => {
                   const { student, subjectResults } = res;
                   const getSub = (code: string) => subjectResults.find(s => s.subjectCode === code);
-                  
+
                   const ban = getSub('BAN');
                   const eng = getSub('ENG');
                   const mat = getSub('MAT');
@@ -327,9 +325,8 @@ export const StudentTable: React.FC<StudentTableProps> = ({
                     return (
                       <div className="inline-flex flex-col items-center">
                         <div className="flex items-center space-x-0.5">
-                          <span className={`font-mono font-semibold text-[11px] ${
-                            isFail ? 'text-rose-600 font-bold' : 'text-slate-800'
-                          }`}>
+                          <span className={`font-mono font-semibold text-[11px] ${isFail ? 'text-rose-600 font-bold' : 'text-slate-800'
+                            }`}>
                             {sub.totalMark}
                           </span>
                           {isOpt && (
@@ -338,9 +335,8 @@ export const StudentTable: React.FC<StudentTableProps> = ({
                             </span>
                           )}
                         </div>
-                        <span className={`text-[9px] px-1 rounded font-mono ${
-                          isFail ? 'bg-rose-100 text-rose-700 font-bold' : isOpt && sub.optionalAddedGP > 0 ? 'bg-purple-100 text-purple-700 font-bold' : 'text-slate-500'
-                        }`}>
+                        <span className={`text-[9px] px-1 rounded font-mono ${isFail ? 'bg-rose-100 text-rose-700 font-bold' : isOpt && sub.optionalAddedGP > 0 ? 'bg-purple-100 text-purple-700 font-bold' : 'text-slate-500'
+                          }`}>
                           {isOpt && sub.optionalAddedGP > 0 ? `+${sub.optionalAddedGP.toFixed(1)}` : `${sub.gradePoint.toFixed(1)}`}
                         </span>
                       </div>
@@ -348,11 +344,10 @@ export const StudentTable: React.FC<StudentTableProps> = ({
                   };
 
                   return (
-                    <tr 
+                    <tr
                       key={student.id}
-                      className={`hover:bg-slate-50/80 transition-colors ${
-                        !res.isPassed ? 'bg-rose-50/30' : res.finalGPA === 5.0 ? 'bg-emerald-50/30' : ''
-                      }`}
+                      className={`hover:bg-slate-50/80 transition-colors ${!res.isPassed ? 'bg-rose-50/30' : res.finalGPA === 5.0 ? 'bg-emerald-50/30' : ''
+                        }`}
                     >
                       {/* Roll */}
                       <td className="py-3 px-3 font-mono font-bold text-slate-800">
